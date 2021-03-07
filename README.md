@@ -1,5 +1,5 @@
-# Robo Advisor
-This robo advisor will provide automated stock trading recommedations*. This program can accept one or more stock or crypto symbols as inputs, then it will request live historical trading data from the internet, and finally provide a reommendaton as to whether or not you or a client should purchase the given stock or cryptocurrency.
+# Nat-Bot Stock Advisor
+The Nat-Bot is now a robo advisor capable of providing automated stock trading recommedations*. This program can accept one or more stock or crypto symbols as inputs, then it will request live historical trading data from the internet, and finally provide a reommendaton as to whether or not you or a client should purchase the given stock or cryptocurrency.
 
 *Note that neither I nor this program are financial advisors.
 
