@@ -1,14 +1,13 @@
 # this is the "app/robo_advisor.py" file
 import os
 import json
+import requests
 from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
 now = datetime.now()
 
-readable=json.loads(response.txt)
-last_refreshed = readable["Meta Data"]["Last Refreshed"]
 
 
 while True:
@@ -28,17 +27,28 @@ while True:
         continue
     else:
         symbol.append(symbol.lower())
+    
+
+
+for stock in symbol:
+    apikey = os.environ.get("ALPHAVANTAGE_API_KEY")
+
+url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock}&ap"
+response = requests.get(url)
+readable=json.loads(response.text)
+
+last_refreshed = readable["Meta Data"]["Last Refreshed"]
+
 
 
 # this is mostly from https://github.com/prof-rossetti/intro-to-python/blob/master/projects/robo-advisor/README.md
 print("-------------------------")
-print("SELECTED SYMBOL: ", symbol)
+print("SELECTED SYMBOL: ", stock)
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT: ",now.strftime('%I:%M %p'), "on", now.strftime('%b %d, %Y'))
 print("-------------------------")
-print("DATA FROM: ", last_refreshed)
-print("LATEST DAY: 2018-02-20")
+print("LATEST DAY: ", last_refreshed)
 print("LATEST CLOSE: $100,000.00")
 print("RECENT HIGH: $101,000.00")
 print("RECENT LOW: $99,000.00")
