@@ -78,7 +78,7 @@ if symbol in stonks:  #having some fun here with the reddit memes and stocks
     reason = "Nat-Bot sees that you have chosen either gamestop, amc, or blackberry meme stonks. These are not your common stocks, they are special, meme stonks from Reddit, and we must always hold the line with our diamond hands!" 
 elif float(latest_close) < 1.15 * recent_low:
     recommend = "Buy!"
-    reason = "Nat-Bot thinks that this stock has a lot of potential based on how its less than fifteen percent more than its recent low."
+    reason = "Nat-Bot thinks that this stock has a lot of potential based on how its less than fifteen percent above its recent low."
 elif float(latest_close) < 2 * recent_low:
     recommend = "Hold for now."
     reason = "Nat-Bot thinks that if you have the stock, keep it until it doubles its recent low, because it could still grow! If you don't have the stock, check for new updates daily in case it falls."
