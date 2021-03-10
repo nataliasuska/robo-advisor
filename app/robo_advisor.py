@@ -5,16 +5,15 @@ import json
 import requests
 from datetime import datetime
 from dotenv import load_dotenv
-from pandas import DataFrame
 
 load_dotenv()
 now = datetime.now()
-
 digit = False
         
 def to_usd(my_price):
     return f"${my_price:,.2f}"
 
+#for users to input their ticker and respond to errors
 while True:
     symbol = input("Please input a valid stock or cryptocurency ticker symbol between 1-5 characters long, without spaces or numbers: ")
     try:
@@ -43,25 +42,15 @@ url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={sym
 response = requests.get(url)
 parsed_response = json.loads(response.text)
 
-error_message = "Error Message"
-if error_message in parsed_response:
+error = "Error Message"
+if error in parsed_response:
     print("An error has caused Nat-Bot's Stock Advisor to force quit, likely from unsupported characters, numbers, or an invalid ticker. Please try again.")
     exit()
 else:
     pass
 
-records = []
-for date, daily_data in parsed_response["Time Series (Daily)"].items():
-    record = {
-        "date": date,
-        "open": float(daily_data["1. open"]),
-        "high": float(daily_data["2. high"]),
-        "low": float(daily_data["3. low"]),
-        "close": float(daily_data["4. close"]),
-        "volume": int(daily_data["5. volume"]),
-    }
-    records.append(record)
 
+#variable setup
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
 tsd = parsed_response["Time Series (Daily)"]
@@ -79,21 +68,41 @@ for date in dates:
 recent_high = max(high)
 recent_low = min(low)
 
+#recommendations
+stonks = ['gme', 'GME', 'gME', 'gmE', 'gMe', 'GmE', 'GMe', 'Gme', 'amc', 'AMC', 'aMC', 'amC', 'aMc', 'Amc', 'AMc', 'AmC', 'bb', 'BB', 'bB', 'Bb']
+if symbol in stonks:  #having some fun here with the reddit memes and stocks
+    recommend = "DIAMOND HANDS!!!"
+    reason = "Nat-Bot sees that you have chosen either gamestop, amc, or blackberry meme stonks. These are not your common stocks, they are special, meme stonks from Reddit, and we must always hold the line with our diamond hands!" 
+elif float(latest_close) <= 1.15 * recent_low:
+    recommend = "Buy!"
+    reason = "Nat-Bot thinks that this stock has a lot of potential based on its latest price."
+elif float(latest_close) <= 2 * recent_low:
+    recommend = "Hold for now."
+    reason = "Nat-Bot thinks that if you have the stock, keep it until something exciting happens, because it could still grow! If you don't have the stock, check for new updates daily."
+else:
+    recommend = "Sell!"
+    reason = "Nat-Bot sees that the stock has more than doubled from its recent low. This is a good time to sell it if you have it, or wait it out if you don't."
+
+
 
 # this is section, minus the variables, is from https://github.com/prof-rossetti/intro-to-python/blob/master/projects/robo-advisor/README.md
 print("-------------------------")
 print("SELECTED SYMBOL: ", symbol)
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: ",now.strftime('%I:%M %p'), "on", now.strftime('%b %d, %Y'))
+#used this next one from my shopping cart project
+print("REQUEST COMPLETED AT: ",now.strftime('%I:%M %p'), "on", now.strftime('%b %d, %Y'))
 print("-------------------------")
 print("LATEST DAY: ", last_refreshed)
 print("LATEST CLOSE: ", to_usd(float(latest_close)))
 print("RECENT HIGH: ", to_usd(float(recent_high)))
 print("RECENT LOW: ", to_usd(float(recent_low)))
 print("-------------------------")
-print("RECOMMENDATION: TODO")
-print("RECOMMENDATION REASON: TODO")
+print("Nat-Bot's Stock Advisor is now analyzing your stock:")
+print("RECOMMENDATION: ", recommend)
+print("RECOMMENDATION REASON: ", reason)
+print("-------------------------")
+print("Nat-Bot is sending over your data to a CSV")
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
