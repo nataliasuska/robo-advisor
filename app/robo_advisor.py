@@ -16,7 +16,7 @@ def to_usd(my_price):
     return f"${my_price:,.2f}"
 
 while True:
-    symbol = input("Please input a stock or cryptocurency ticker symbol between 1-5 characters long: ")
+    symbol = input("Please input a valid stock or cryptocurency ticker symbol between 1-5 characters long, without spaces or numbers: ")
     try:
         float(symbol)
         print("Oops, your symbol might includes a number(s). Please try again!")
@@ -45,7 +45,7 @@ parsed_response = json.loads(response.text)
 
 error_message = "Error Message"
 if error_message in parsed_response:
-    print("An error has caused Nat-Bot's Stock Advisor to force quit, likely from unsupported characters or numbers. Please try again.")
+    print("An error has caused Nat-Bot's Stock Advisor to force quit, likely from unsupported characters, numbers, or an invalid ticker. Please try again.")
     exit()
 else:
     pass
@@ -63,10 +63,22 @@ for date, daily_data in parsed_response["Time Series (Daily)"].items():
     records.append(record)
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
+
 tsd = parsed_response["Time Series (Daily)"]
 dates = list(tsd.keys())
 latest_day = dates[0]
 latest_close = tsd[latest_day]["4. close"]
+
+high = []
+low = []
+for date in dates:
+    high_price = tsd[date]["2. high"]
+    high.append(float(high_price))
+    low_price = tsd[date]["3. low"]
+    low.append(float(low_price))
+recent_high = max(high)
+recent_low = min(low)
+
 
 # this is section, minus the variables, is from https://github.com/prof-rossetti/intro-to-python/blob/master/projects/robo-advisor/README.md
 print("-------------------------")
@@ -77,10 +89,10 @@ print("REQUEST AT: ",now.strftime('%I:%M %p'), "on", now.strftime('%b %d, %Y'))
 print("-------------------------")
 print("LATEST DAY: ", last_refreshed)
 print("LATEST CLOSE: ", to_usd(float(latest_close)))
-print("RECENT HIGH: $101,000.00")
-print("RECENT LOW: $99,000.00")
+print("RECENT HIGH: ", to_usd(float(recent_high)))
+print("RECENT LOW: ", to_usd(float(recent_low)))
 print("-------------------------")
-print("RECOMMENDATION: BUY!")
+print("RECOMMENDATION: TODO")
 print("RECOMMENDATION REASON: TODO")
 print("-------------------------")
 print("HAPPY INVESTING!")
