@@ -10,6 +10,8 @@ from pandas import DataFrame
 load_dotenv()
 now = datetime.now()
 
+digit = False
+        
 def to_usd(my_price):
     return f"${my_price:,.2f}"
 
@@ -24,6 +26,13 @@ while True:
     if len(symbol)<1 or len(symbol)>5:
         print("Oops, we need a stock between 1 to 5 characters. Please try again!")
         continue
+    for s in symbol:
+        if s.isdigit():
+            digit = True
+            print("Oops, it looks like you used a number(s). Please try again!")
+            continue
+        elif digit == False:
+            pass
     else:
         break
 
@@ -36,7 +45,7 @@ parsed_response = json.loads(response.text)
 
 error_message = "Error Message"
 if error_message in parsed_response:
-    print("Oops, something went wrong, please try again.")
+    print("An error has caused Nat-Bot's Stock Advisor to force quit, likely from unsupported characters or numbers. Please try again.")
     exit()
 else:
     pass
