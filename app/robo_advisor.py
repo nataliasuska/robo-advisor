@@ -1,10 +1,11 @@
-# this is the "app/robo_advisor.py" file
 import os
 import csv
 import json
 import requests
 from datetime import datetime
 from dotenv import load_dotenv
+import matplotlib.pyplot as plt
+
 
 load_dotenv()
 now = datetime.now()
@@ -128,3 +129,16 @@ print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
 
+
+#an attempt for data viz, its messy but got help from https://pythonspot.com/matplotlib-line-chart/
+prices = []
+for date in dates:
+    price = tsd[date]["4. close"]
+    prices.append(float(price))
+
+plt.plot(dates, prices)
+plt.title('Prices over Time for your Inputed Stock')
+plt.xlabel('Time')
+plt.ylabel('Stock Price')
+plt.grid(True)
+plt.show()
