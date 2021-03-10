@@ -75,7 +75,7 @@ recent_low = min(low)
 stonks = ['gme', 'GME', 'gME', 'gmE', 'gMe', 'GmE', 'GMe', 'Gme', 'amc', 'AMC', 'aMC', 'amC', 'aMc', 'Amc', 'AMc', 'AmC', 'bb', 'BB', 'bB', 'Bb']
 if symbol in stonks:  #having some fun here with the reddit memes and stocks
     recommend = "DIAMOND HANDS!!!"
-    reason = "Nat-Bot sees that you have chosen either gamestop, amc, or blackberry meme stonks. These are not your common stocks, they are special, meme stonks from Reddit, and we must always hold the line with our diamond hands!" 
+    reason = "Nat-Bot sees that you have chosen either GameStop, AMC, or blackberry meme stonks. These are not your common stocks, they are special, meme stonks from Reddit, and we must always hold the line with our diamond hands!" 
 elif float(latest_close) < 1.15 * recent_low:
     recommend = "Buy!"
     reason = "Nat-Bot thinks that this stock has a lot of potential based on how its less than fifteen percent above its recent low."
