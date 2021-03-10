@@ -54,6 +54,10 @@ for date, daily_data in parsed_response["Time Series (Daily)"].items():
     records.append(record)
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
+tsd = parsed_response["Time Series (Daily)"]
+dates = list(tsd.keys())
+latest_day = dates[0]
+latest_close = tsd[latest_day]["4. close"]
 
 # this is section, minus the variables, is from https://github.com/prof-rossetti/intro-to-python/blob/master/projects/robo-advisor/README.md
 print("-------------------------")
@@ -63,7 +67,7 @@ print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT: ",now.strftime('%I:%M %p'), "on", now.strftime('%b %d, %Y'))
 print("-------------------------")
 print("LATEST DAY: ", last_refreshed)
-print("LATEST CLOSE: ")
+print("LATEST CLOSE: ", to_usd(float(latest_close)))
 print("RECENT HIGH: $101,000.00")
 print("RECENT LOW: $99,000.00")
 print("-------------------------")
