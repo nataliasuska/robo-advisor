@@ -35,10 +35,10 @@ ALPHAVANTAGE_API_KEY="123"
 ```
 We will now replace the 123 with the actual key.
 
-For setting up our API, go to [the Alpha Vantage website](https://www.alphavantage.co/) and claim your free API key. Follow the instructions, and receieve a key code. Copy and paste it into your .env file to replace the 123 in our environment variable.
+For setting up our API, go to [the Alpha Vantage website](https://www.alphavantage.co/) and claim your free API key. Follow the instructions, and receive a key code. Copy and paste it into your .env file to replace the 123 in our environment variable.
 
 
-## Checkout - Run the Code
+## Run the Code
 Now let's run the Python script from the command-line:
 ```sh
 python app/robo_advisor.py
